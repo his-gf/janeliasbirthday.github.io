@@ -8,15 +8,22 @@ window.addEventListener('load', () => {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes',
         cancelButtonText: 'No',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            document.querySelector('.song').play();
-            animationTimeline();
-        } else {
-            animationTimeline();
+        preConfirm: () => {
+            return new Promise((resolve) => {
+                // This ensures it's within a user gesture context
+                document.querySelector('.song').play()
+                    .then(resolve)
+                    .catch((error) => {
+                        console.error("Playback failed:", error);
+                        resolve(); // Resolve anyway so timeline starts
+                    });
+            });
         }
+    }).then((result) => {
+        animationTimeline(); // Call timeline either way
     });
 });
+
 
 
 // animation timeline
