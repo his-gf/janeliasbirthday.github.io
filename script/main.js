@@ -248,8 +248,12 @@ const animationTimeline = () => {
 const replyBtn = document.getElementById("replay");
 replyBtn.addEventListener("click", () => {
     const song = document.querySelector('.song');
-    song.currentTime = 0; // rewind to start
-    song.play();          // play again
-    tl.restart();         // restart animation
+    song.pause();          // stop if it's still playing
+    song.currentTime = 0;  // rewind to start
+    song.muted = false;    // ensure it's not muted
+    song.play().catch(err => {
+        console.warn("Audio play failed:", err);
+    });
+    tl.restart();          // restart animation
 });
 }
