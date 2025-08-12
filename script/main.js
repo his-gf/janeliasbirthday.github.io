@@ -244,9 +244,12 @@ const animationTimeline = () => {
         "+=1"
     );
 
-    // Restart Animation on click
-    const replyBtn = document.getElementById("replay");
-    replyBtn.addEventListener("click", () => {
-        tl.restart();
-    });
+// Restart Animation on click
+const replyBtn = document.getElementById("replay");
+replyBtn.addEventListener("click", () => {
+    const song = document.querySelector('.song');
+    song.currentTime = 0; // rewind to start
+    song.play();          // play again
+    tl.restart();         // restart animation
+});
 }
